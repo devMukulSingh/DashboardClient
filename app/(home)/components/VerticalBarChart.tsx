@@ -11,7 +11,7 @@ import {
   YAxis,
 } from "recharts";
 import Chart from "chart.js/auto";
-import { base_url_server, fetcher } from "@/lib/utils";
+import { base_url_server, useLocalStorage } from "@/lib/utils";
 import useSWR from "swr";
 import toast from "react-hot-toast";
 import { Fragment, useState } from "react";
@@ -20,18 +20,31 @@ import { DateRange } from "react-day-picker";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { IapiData } from "@/lib/types";
 
+export interface Iargs {
+  toDate: string;
+  fromDate: string;
+  token: string | undefined;
+  gender: string;
+}
 
-type Props = {
+const fetcher = async (args: { url: string; keys: Iargs }) =>
+  await fetch(args.url, {
+    headers: {
+      Authorization: args.keys?.token || "",
+    },
+  }).then((res) => res.json());
 
-};
-const VerticalBarChart = ({  }: Props) => {
+
+type Props = {};
+const VerticalBarChart = ({}: Props) => {
   const router = useRouter();
-
+  const { getFromLocalStorage } = useLocalStorage();
+  const token = getFromLocalStorage("token");
   const searchParams = useSearchParams();
   const fromDate = searchParams.get("from");
   const toDate = searchParams.get("to");
   const age = searchParams.get("age");
-  const gender = searchParams.get('gender')
+  const gender = searchParams.get("gender");
 
   const addSearchParams = (newParams: any) => {
     // Get the current search params and turn them into a URLSearchParams object
@@ -51,14 +64,18 @@ const VerticalBarChart = ({  }: Props) => {
   };
 
   const { data } = useSWR<IapiData>(
-    [
-      (fromDate || toDate || age || gender)
-        ? `${base_url_server}/chart/get-filtereddata?from=${fromDate}&to=${toDate}&age=${age}&gender=${gender}`
-        : `${base_url_server}/chart/get-chartdata`,
-      fromDate,
-      gender,
-      age,
-    ],
+    {
+      url:
+        (fromDate || toDate || age || gender)
+          ? `${base_url_server}/chart/get-filtereddata?from=${fromDate}&to=${toDate}&age=${age}&gender=${gender}`
+          : `${base_url_server}/chart/get-chartdata`,
+      keys: {
+        fromDate,
+        gender,
+        age,
+        token,
+      },
+    },
     fetcher,
     {
       revalidateOnFocus: false,
@@ -68,7 +85,6 @@ const VerticalBarChart = ({  }: Props) => {
       },
     }
   );
-
 
   return (
     <>
@@ -91,7 +107,9 @@ const VerticalBarChart = ({  }: Props) => {
           <Bar
             dataKey="totalTime"
             fill="#82ca9d"
-            onClick={(data) => addSearchParams({selectedBar:data.payload.name})}
+            onClick={(data) =>
+              addSearchParams({ selectedBar: data.payload.name })
+            }
           />
         </BarChart>
       </ResponsiveContainer>

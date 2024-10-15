@@ -10,7 +10,7 @@ const LineChart =  dynamic( () => import('./HorizontalLineChart'),{ssr:false});
 const ChartsSection = () => {
   const selectedBar = useSearchParams().get('selectedBar');
   return (
-    <div className="flex gap-5">
+    <div className="flex md:flex-row flex-col gap-5">
       <VerticalBarChart />
       {
         selectedBar && 

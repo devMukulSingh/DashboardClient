@@ -7,9 +7,12 @@ import AgeFilter from "./components/AgeFilter";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import ChartsSection from "./components/ChartsSection";
+import Header from "./components/Header";
+import { useLocalStorage } from "@/lib/utils";
 
 export default function Home() {
-  const currMonth = useMemo(() => new Date().getMonth(), []);
+
+    const currMonth = useMemo(() => new Date().getMonth(), []);
   const initialDate = useMemo( () => ({
     from: new Date(2022, currMonth, 1),
     to: new Date(2022, currMonth, 30),
@@ -22,7 +25,8 @@ export default function Home() {
   }
   return (
     <main className="flex flex-col gap-5 justify-center items-center h-screen w-screen p-5 sm:p-10">
-      <div className="h-screen md:w-2/3 w-full gap-5 flex flex-col items-center justify-center">
+      <Header/>
+      <div className=" md:w-2/3 w-full gap-5 flex flex-col items-center justify-center">
         <ChartsSection/>
         <DatePicker date={date} setDate={setDate} />
         <GenderFilter
