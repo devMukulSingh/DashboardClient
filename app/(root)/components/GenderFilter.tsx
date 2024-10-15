@@ -1,11 +1,9 @@
 "use client";
-import { Checkbox } from "@/components/ui/checkbox";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 
 type Props = {
-
 }
 
 const GenderFilter = ({
@@ -15,6 +13,7 @@ const GenderFilter = ({
   const genders = ["Male", "Female"];
   const searchParams = useSearchParams()
   const genderSearch = searchParams.get('gender');
+  
  const addSearchParams = (newParams: any) => {
   // Get the current search params and turn them into a URLSearchParams object
   const params = new URLSearchParams(searchParams);

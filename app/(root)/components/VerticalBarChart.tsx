@@ -17,36 +17,38 @@ import toast from "react-hot-toast";
 import { Fragment, useState } from "react";
 import DatePicker from "./DatePicker";
 import { DateRange } from "react-day-picker";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { IapiData } from "@/lib/types";
 
-interface IapiData {
-  excelData: {
-    A: number;
-    B: number;
-    C: number;
-    D: number;
-    E: number;
-    F: number;
-    age: string;
-    Gender: string;
-    Day: Date;
-  }[];
-  chartData: {
-    totalTime: number;
-    name: string;
-  }[];
-}
+
 type Props = {
-  date: DateRange | undefined;
-  setDate: (date: DateRange | undefined) => void;
+
 };
-const Charts = ({ date, setDate }: Props) => {
+const VerticalBarChart = ({  }: Props) => {
+  const router = useRouter();
+
   const searchParams = useSearchParams();
   const fromDate = searchParams.get("from");
   const toDate = searchParams.get("to");
   const age = searchParams.get("age");
   const gender = searchParams.get('gender')
 
+  const addSearchParams = (newParams: any) => {
+    // Get the current search params and turn them into a URLSearchParams object
+    const params = new URLSearchParams(searchParams);
+
+    // Loop through the newParams object and append or update the query params
+    Object.keys(newParams).forEach((key) => {
+      if (newParams[key] === undefined) {
+        params.delete(key); // Optionally remove params if value is undefined
+      } else {
+        params.set(key, newParams[key]);
+      }
+    });
+
+    // Push the new URL with the updated search params
+    router.push(`?${params.toString()}`);
+  };
 
   const { data } = useSWR<IapiData>(
     [
@@ -70,11 +72,9 @@ const Charts = ({ date, setDate }: Props) => {
 
   return (
     <>
-      <ResponsiveContainer width="50%" height="50%">
+      <ResponsiveContainer width={500} height={300} className={"border-2 p-5"}>
         <BarChart
           layout="vertical"
-          width={500}
-          height={300}
           data={data?.chartData}
           margin={{
             top: 5,
@@ -88,11 +88,15 @@ const Charts = ({ date, setDate }: Props) => {
           <YAxis type="category" dataKey={"name"} />
           <Tooltip />
           <Legend />
-          <Bar dataKey="totalTime" fill="#82ca9d" />
+          <Bar
+            dataKey="totalTime"
+            fill="#82ca9d"
+            onClick={(data) => addSearchParams({selectedBar:data.payload.name})}
+          />
         </BarChart>
       </ResponsiveContainer>
     </>
   );
 };
 
-export default Charts;
+export default VerticalBarChart;

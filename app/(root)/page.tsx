@@ -1,14 +1,12 @@
 "use client";
-import dynamic from "next/dynamic";
 import { useMemo, useState } from "react";
 import DatePicker from "./components/DatePicker";
 import { DateRange } from "react-day-picker";
 import GenderFilter from "./components/GenderFilter";
 import AgeFilter from "./components/AgeFilter";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-const Chart = dynamic(() => import("./components/Charts"), { ssr: false });
+import ChartsSection from "./components/ChartsSection";
 
 export default function Home() {
   const currMonth = useMemo(() => new Date().getMonth(), []);
@@ -23,9 +21,9 @@ export default function Home() {
     setDate(initialDate);
   }
   return (
-    <main className="flex flex-col gap-5 justify-center items-center h-screen w-screen">
+    <main className="flex flex-col gap-5 justify-center items-center h-screen w-screen p-5 sm:p-10">
       <div className="h-screen md:w-2/3 w-full gap-5 flex flex-col items-center justify-center">
-        <Chart date={date} setDate={setDate} />
+        <ChartsSection/>
         <DatePicker date={date} setDate={setDate} />
         <GenderFilter
         />
