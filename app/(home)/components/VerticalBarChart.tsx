@@ -5,22 +5,16 @@ import {
   CartesianGrid,
   Legend,
   ResponsiveContainer,
-  Text,
   Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
-import Chart from "chart.js/auto";
 import { base_url_server } from "@/lib/utils";
 import useSWR from "swr";
 import toast from "react-hot-toast";
-import { Fragment, Suspense, useState } from "react";
-import DatePicker from "./DatePicker";
-import { DateRange } from "react-day-picker";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import {  useRouter, useSearchParams } from "next/navigation";
 import { IapiData } from "@/lib/types";
-import ChartSkeleton from "./ChartSkeleton";
-import useAddParams from "@/lib/hooks/useAddParams";
+import useAddParams from "@/lib/hooks/UseAddParams";
 import useLocalStorage from "@/lib/hooks/UseLocalStorage";
 
 export interface Iargs {
@@ -37,7 +31,6 @@ const fetcher = async (args: { url: string; keys: Iargs }) =>
 
 type Props = {};
 const VerticalBarChart = ({}: Props) => {
-  const router = useRouter();
   const { getFromLocalStorage } = useLocalStorage();
   const user = getFromLocalStorage("user");
   const searchParams = useSearchParams();
@@ -47,7 +40,7 @@ const VerticalBarChart = ({}: Props) => {
   const gender = searchParams.get("gender");
    const { addSearchParams } = useAddParams();
 
-  const { data, isLoading } = useSWR<IapiData>(
+  const { data,  } = useSWR<IapiData>(
     {
       url:
         fromDate || toDate || age || gender

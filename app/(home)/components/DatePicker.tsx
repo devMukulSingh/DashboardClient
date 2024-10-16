@@ -9,9 +9,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { DateRange } from "react-day-picker";
-import { useRouter, useSearchParams } from "next/navigation";
-import Cookies from "js-cookie";
-import useAddParams from "@/lib/hooks/useAddParams";
+import useAddParams from "@/lib/hooks/UseAddParams";
 
 type Props = {
   date: DateRange | undefined;

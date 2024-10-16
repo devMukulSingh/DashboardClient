@@ -9,7 +9,7 @@ import {
   YAxis,
 } from "recharts";
 import useSWR from "swr";
-import { useRouter, useSearchParams } from "next/navigation";
+import {  useSearchParams } from "next/navigation";
 import { base_url_server,  } from "@/lib/utils";
 import toast from "react-hot-toast";
 import { Iargs } from "./VerticalBarChart";

@@ -3,7 +3,7 @@ import { signInSchema } from "@/lib/schema";
 import React from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormField } from "@/components/ui/form";
+import { Form,  } from "@/components/ui/form";
 import { z } from "zod";
 import EmailField from "./EmailField";
 import PasswordField from "./PasswordField";
@@ -51,7 +51,7 @@ const SignUpForm = () => {
         if (e.response) toast.error(e.response.data.error);
         else toast.error(e.message);
       },
-      async onSuccess(data, config) {
+      async onSuccess(data) {
         setInLocalStorage("user", data.data);
         Cookies.set("token", data.data.token, { expires: 7 });
         const userPreferences = Cookies.get(data.data.id);
@@ -86,7 +86,7 @@ const SignUpForm = () => {
           aria-disabled={isLoading}
           href={"/sign-up"}
         >
-          Don't have an account? SignUp
+          Don&apos;t have an account? SignUp
         </Link>
       </form>
     </>

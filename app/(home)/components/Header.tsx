@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import useLocalStorage from "@/lib/hooks/UseLocalStorage";
-import { base_url_server, fetcher } from "@/lib/utils";
 import axios from "axios";
 import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";

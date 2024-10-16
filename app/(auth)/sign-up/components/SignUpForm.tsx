@@ -3,7 +3,7 @@ import { signUpSchema } from "@/lib/schema";
 import React from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form, FormField } from "@/components/ui/form";
+import { Form,  } from "@/components/ui/form";
 import { z } from "zod";
 import NameField from "./NameField";
 import EmailField from "./EmailField";
@@ -15,8 +15,7 @@ import { base_url_server,  } from "@/lib/utils";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { cookies } from "next/headers";
-import { ResponseType, AxiosResponse, AxiosError } from "axios";
+import { AxiosError } from "axios";
 import Cookies from "js-cookie";
 import useLocalStorage from "@/lib/hooks/UseLocalStorage";
 

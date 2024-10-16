@@ -1,6 +1,5 @@
 import dynamic from "next/dynamic";
 import { useSearchParams } from "next/navigation";
-import React, { Suspense } from "react";
 import ChartSkeleton from "./ChartSkeleton";
 const VerticalBarChart = dynamic(() => import("./VerticalBarChart"), {
   ssr: false,

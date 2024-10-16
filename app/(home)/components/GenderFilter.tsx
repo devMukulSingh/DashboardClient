@@ -1,19 +1,13 @@
 "use client";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
-import Cookies from "js-cookie";
-import useAddParams from "@/lib/hooks/useAddParams";
+import useAddParams from "@/lib/hooks/UseAddParams";
 
-type Props = {
-}
-
-const GenderFilter = ({
-
-}:Props) => {
+const GenderFilter = ({}) => {
   const genders = ["Male", "Female"];
-  const searchParams = useSearchParams()
-  const genderSearch = searchParams.get('gender');
+  const searchParams = useSearchParams();
+  const genderSearch = searchParams.get("gender");
   const { addSearchParams } = useAddParams();
 
   return (
@@ -24,9 +18,9 @@ const GenderFilter = ({
       <section className="flex gap-5">
         <RadioGroup defaultValue="comfortable">
           {genders.map((gender, index) => (
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2" key={index}>
               <RadioGroupItem
-                checked={genderSearch===gender}
+                checked={genderSearch === gender}
                 onClick={() => {
                   addSearchParams({ gender });
                 }}
