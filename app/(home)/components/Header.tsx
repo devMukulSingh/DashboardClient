@@ -1,3 +1,4 @@
+'use client'
 import { Button } from "@/components/ui/button";
 import useLocalStorage from "@/lib/hooks/UseLocalStorage";
 import axios from "axios";
@@ -18,11 +19,13 @@ const Header = () => {
     removeFromLocalStorage("user");
   };
   return (
-    <div className="w-full h-20 flex items-center justify-between border p-5 ">
+    <div className="w-full h-20 flex items-center justify-between border shadow-md bg-white sticky top-0 z-50 p-3 sm:p-5 ">
       <h1 className="text-lg sm:text-2xl">Welcome {user.name}</h1>
       <Button onClick={handleLogout}>
-        <LogOut className="mr-2" />
+        <LogOut className="sm:mr-2" />
+        <h1 className="sm:block hidden">
         Logout
+        </h1>
       </Button>
     </div>
   );

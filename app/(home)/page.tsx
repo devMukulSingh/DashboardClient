@@ -14,25 +14,24 @@ import Cookies from "js-cookie";
 import { parse } from "date-fns";
 
 export default function Home() {
-  const fromDate = useSearchParams().get('from');
+  const fromDate = useSearchParams().get("from");
   const toDate = useSearchParams().get("to");
-  let from:Date;
-  let to:Date;
+  let from: Date;
+  let to: Date;
 
-  if(fromDate) from=parse(fromDate,'dd/MM/yyyy',new Date());
+  if (fromDate) from = parse(fromDate, "dd/MM/yyyy", new Date());
   if (toDate) to = parse(toDate, "dd/MM/yyyy", new Date());
-
 
   const currMonth = useMemo(() => new Date().getMonth(), []);
   const initialDate = useMemo(
     () => ({
-      from: from ||  new Date(2022, currMonth, 1),
-      to:  to || new Date(2022, currMonth, 30),
+      from: from || new Date(2022, currMonth, 1),
+      to: to || new Date(2022, currMonth, 30),
     }),
-    [],
+    []
   );
   const [date, setDate] = useState<DateRange | undefined>(initialDate);
-  
+
   const { getFromLocalStorage } = useLocalStorage();
   const user = getFromLocalStorage("user");
   const router = useRouter();
@@ -42,14 +41,17 @@ export default function Home() {
     if (Cookies.get(user.id)) Cookies.remove(user.id);
   };
   return (
-    <main className="flex flex-col gap-5 justify-center items-center min-h-screen p-5 sm:p-10">
-      <Header />
-      <div className=" md:w-2/3 w-full gap-5 flex flex-col items-center justify-center">
+    <main className="flex flex-col gap-5 justify-center items-center min-h-[calc(100vh-5rem)]  ">
+      <div className=" md:w-2/3 w-full gap-5 flex flex-col sm:items-center px-5 py-5 sm:p-10   ">
         <ChartsSection />
-        <DatePicker date={date} setDate={setDate} />
-        <GenderFilter />
-        <AgeFilter />
-        <Button onClick={handleClearFilters}>Clear filters</Button>
+        <div className=" gap-5 flex flex-col sm:px-0 px-20    ">
+          <DatePicker date={date} setDate={setDate} />
+          <GenderFilter />
+          <AgeFilter />
+          <Button className="w-fit" onClick={handleClearFilters}>
+            Clear filters
+          </Button>
+        </div>
       </div>
     </main>
   );

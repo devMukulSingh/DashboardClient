@@ -65,16 +65,21 @@ const VerticalBarChart = ({}: Props) => {
 
   return (
     <>
-      <ResponsiveContainer width={500} height={300} className={"border-2 p-5"}>
+      <ResponsiveContainer
+        width={500}
+        height={300}
+        className={"py-2 border-2  "}
+      >
         <BarChart
+          className=""
+          margin={{
+            bottom: 0,
+            left: 0,
+            right: 0,
+            top: 0,
+          }}
           layout="vertical"
           data={data?.chartData}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
         >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis type="number" />
