@@ -12,7 +12,7 @@ import {
 import { base_url_server } from "@/lib/utils";
 import useSWR from "swr";
 import toast from "react-hot-toast";
-import {  useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { IapiData } from "@/lib/types";
 import useAddParams from "@/lib/hooks/UseAddParams";
 import useLocalStorage from "@/lib/hooks/UseLocalStorage";
@@ -38,9 +38,9 @@ const VerticalBarChart = ({}: Props) => {
   const toDate = searchParams.get("to");
   const age = searchParams.get("age");
   const gender = searchParams.get("gender");
-   const { addSearchParams } = useAddParams();
+  const { addSearchParams } = useAddParams();
 
-  const { data,  } = useSWR<IapiData>(
+  const { data } = useSWR<IapiData>(
     {
       url:
         fromDate || toDate || age || gender
@@ -60,42 +60,36 @@ const VerticalBarChart = ({}: Props) => {
         toast.error(`Something went wrong, please try again later`);
         console.log(e);
       },
-    }
+    },
   );
 
   return (
     <>
-        
-   
-        <ResponsiveContainer
-          width={500}
-          height={300}
-          className={"border-2 p-5"}
+      <ResponsiveContainer width={500} height={300} className={"border-2 p-5"}>
+        <BarChart
+          layout="vertical"
+          data={data?.chartData}
+          margin={{
+            top: 5,
+            right: 30,
+            left: 20,
+            bottom: 5,
+          }}
         >
-          <BarChart
-            layout="vertical"
-            data={data?.chartData}
-            margin={{
-              top: 5,
-              right: 30,
-              left: 20,
-              bottom: 5,
-            }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis type="number" />
-            <YAxis type="category" dataKey={"name"} />
-            <Tooltip />
-            <Legend />
-            <Bar
-              dataKey="totalTime"
-              fill="#82ca9d"
-              onClick={(data) =>
-                addSearchParams({ selectedBar: data.payload.name })
-              }
-            />
-          </BarChart>
-        </ResponsiveContainer>
+          <CartesianGrid strokeDasharray="3 3" />
+          <XAxis type="number" />
+          <YAxis type="category" dataKey={"name"} />
+          <Tooltip />
+          <Legend />
+          <Bar
+            dataKey="totalTime"
+            fill="#82ca9d"
+            onClick={(data) =>
+              addSearchParams({ selectedBar: data.payload.name })
+            }
+          />
+        </BarChart>
+      </ResponsiveContainer>
     </>
   );
 };

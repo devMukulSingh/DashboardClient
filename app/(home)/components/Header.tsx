@@ -20,9 +20,7 @@ const Header = () => {
   };
   return (
     <div className="w-full h-20 flex items-center justify-between border p-5 ">
-      <h1 className="text-lg sm:text-2xl">
-       Welcome {user.name}
-      </h1>
+      <h1 className="text-lg sm:text-2xl">Welcome {user.name}</h1>
       <Button onClick={handleLogout}>
         <LogOut className="mr-2" />
         Logout

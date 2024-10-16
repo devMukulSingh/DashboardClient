@@ -19,7 +19,7 @@ export default function Home() {
       from: new Date(2022, currMonth, 1),
       to: new Date(2022, currMonth, 30),
     }),
-    []
+    [],
   );
   const [date, setDate] = useState<DateRange | undefined>(initialDate);
   const { getFromLocalStorage } = useLocalStorage();

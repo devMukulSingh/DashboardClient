@@ -1,5 +1,4 @@
-'use client'
-
+"use client";
 
 const useLocalStorage = () => {
   const setInLocalStorage = (key: string, value: any) => {

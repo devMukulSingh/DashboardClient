@@ -9,16 +9,15 @@ import {
   YAxis,
 } from "recharts";
 import useSWR from "swr";
-import {  useSearchParams } from "next/navigation";
-import { base_url_server,  } from "@/lib/utils";
+import { useSearchParams } from "next/navigation";
+import { base_url_server } from "@/lib/utils";
 import toast from "react-hot-toast";
 import { Iargs } from "./VerticalBarChart";
 import useLocalStorage from "@/lib/hooks/UseLocalStorage";
 
 const fetcher = async (args: { url: string; keys: Iargs }) =>
   await fetch(args.url, {
-    credentials:"include",
-    
+    credentials: "include",
   }).then((res) => res.json());
 const HorizontalLineChart = () => {
   const searchParams = useSearchParams();
@@ -48,7 +47,7 @@ const HorizontalLineChart = () => {
         toast.error(`Something went wrong, please try again later`);
         console.log(e);
       },
-    }
+    },
   );
 
   return (

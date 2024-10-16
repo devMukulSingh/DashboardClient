@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-const PasswordField = ({ form,isMutating }: Iform) => {
+const PasswordField = ({ form, isMutating }: Iform) => {
   return (
     <FormField
       disabled={isMutating}

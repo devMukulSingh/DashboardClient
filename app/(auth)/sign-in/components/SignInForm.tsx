@@ -3,7 +3,7 @@ import { signInSchema } from "@/lib/schema";
 import React from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form,  } from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { z } from "zod";
 import EmailField from "./EmailField";
 import PasswordField from "./PasswordField";
@@ -22,7 +22,7 @@ type formValues = z.infer<typeof signInSchema>;
 
 async function sendRequest(
   url: string,
-  { arg }: { arg: formValues | { token: string } }
+  { arg }: { arg: formValues | { token: string } },
 ) {
   return await axios.post(url, arg, {
     withCredentials: true,
@@ -58,7 +58,7 @@ const SignUpForm = () => {
         if (userPreferences) router.push(`/?${userPreferences}`);
         else router.push("/");
       },
-    }
+    },
   );
   const isLoading = isMutating || form.formState.isSubmitting;
   const onSubmit = async (data: formValues) => {

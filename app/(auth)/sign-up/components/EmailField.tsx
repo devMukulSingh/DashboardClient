@@ -20,7 +20,7 @@ const EmailField = ({ form }: Iform) => {
           <FormControl>
             <Input {...field} placeholder="mukulsingh2276@gmail.com" />
           </FormControl>
-          <FormMessage/>
+          <FormMessage />
         </FormItem>
       )}
     />

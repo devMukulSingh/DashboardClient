@@ -3,7 +3,7 @@ import { signUpSchema } from "@/lib/schema";
 import React from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Form,  } from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { z } from "zod";
 import NameField from "./NameField";
 import EmailField from "./EmailField";
@@ -11,7 +11,7 @@ import PasswordField from "./PasswordField";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import useSWRMutation from "swr/mutation";
-import { base_url_server,  } from "@/lib/utils";
+import { base_url_server } from "@/lib/utils";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -28,7 +28,7 @@ export interface Iform {
 
 async function sendRequest(
   url: string,
-  { arg }: { arg: formValues | { token: string } }
+  { arg }: { arg: formValues | { token: string } },
 ) {
   return await axios.post(url, arg);
 }
@@ -53,7 +53,7 @@ const SignUpForm = () => {
         Cookies.set("token", data.data.token);
         router.push("/");
       },
-    }
+    },
   );
 
   const isLoading = isMutating || form.formState.isSubmitting;

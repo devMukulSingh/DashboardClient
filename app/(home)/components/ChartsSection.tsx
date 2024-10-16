@@ -3,7 +3,7 @@ import { useSearchParams } from "next/navigation";
 import ChartSkeleton from "./ChartSkeleton";
 const VerticalBarChart = dynamic(() => import("./VerticalBarChart"), {
   ssr: false,
-  loading : () => <ChartSkeleton/>
+  loading: () => <ChartSkeleton />,
 });
 const LineChart = dynamic(() => import("./HorizontalLineChart"), {
   ssr: false,
