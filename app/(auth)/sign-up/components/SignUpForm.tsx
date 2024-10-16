@@ -50,7 +50,7 @@ const SignUpForm = () => {
       },
       async onSuccess(data) {
         setInLocalStorage("user", data.data);
-        Cookies.set("token", data.data.token);
+        Cookies.set("token", data.data.token,{sameSite:'none',expires:7});
         router.push("/");
       },
     },

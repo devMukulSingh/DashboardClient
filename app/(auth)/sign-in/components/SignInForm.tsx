@@ -53,7 +53,7 @@ const SignUpForm = () => {
       },
       async onSuccess(data) {
         setInLocalStorage("user", data.data);
-        Cookies.set("token", data.data.token, { expires: 7 });
+        Cookies.set("token", data.data.token, { expires: 7,sameSite:'none' });
         const userPreferences = Cookies.get(data.data.id);
         if (userPreferences) router.push(`/?${userPreferences}`);
         else router.push("/");
