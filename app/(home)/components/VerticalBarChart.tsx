@@ -11,14 +11,17 @@ import {
   YAxis,
 } from "recharts";
 import Chart from "chart.js/auto";
-import { base_url_server, useLocalStorage } from "@/lib/utils";
+import { base_url_server } from "@/lib/utils";
 import useSWR from "swr";
 import toast from "react-hot-toast";
-import { Fragment, useState } from "react";
+import { Fragment, Suspense, useState } from "react";
 import DatePicker from "./DatePicker";
 import { DateRange } from "react-day-picker";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { IapiData } from "@/lib/types";
+import ChartSkeleton from "./ChartSkeleton";
+import useAddParams from "@/lib/hooks/useAddParams";
+import useLocalStorage from "@/lib/hooks/UseLocalStorage";
 
 export interface Iargs {
   toDate: string;
@@ -29,51 +32,32 @@ export interface Iargs {
 
 const fetcher = async (args: { url: string; keys: Iargs }) =>
   await fetch(args.url, {
-    headers: {
-      Authorization: args.keys?.token || "",
-    },
+    credentials: "include",
   }).then((res) => res.json());
-
 
 type Props = {};
 const VerticalBarChart = ({}: Props) => {
   const router = useRouter();
   const { getFromLocalStorage } = useLocalStorage();
-  const token = getFromLocalStorage("token");
+  const user = getFromLocalStorage("user");
   const searchParams = useSearchParams();
   const fromDate = searchParams.get("from");
   const toDate = searchParams.get("to");
   const age = searchParams.get("age");
   const gender = searchParams.get("gender");
+   const { addSearchParams } = useAddParams();
 
-  const addSearchParams = (newParams: any) => {
-    // Get the current search params and turn them into a URLSearchParams object
-    const params = new URLSearchParams(searchParams);
-
-    // Loop through the newParams object and append or update the query params
-    Object.keys(newParams).forEach((key) => {
-      if (newParams[key] === undefined) {
-        params.delete(key); // Optionally remove params if value is undefined
-      } else {
-        params.set(key, newParams[key]);
-      }
-    });
-
-    // Push the new URL with the updated search params
-    router.push(`?${params.toString()}`);
-  };
-
-  const { data } = useSWR<IapiData>(
+  const { data, isLoading } = useSWR<IapiData>(
     {
       url:
-        (fromDate || toDate || age || gender)
+        fromDate || toDate || age || gender
           ? `${base_url_server}/chart/get-filtereddata?from=${fromDate}&to=${toDate}&age=${age}&gender=${gender}`
           : `${base_url_server}/chart/get-chartdata`,
       keys: {
         fromDate,
         gender,
         age,
-        token,
+        token: user.token,
       },
     },
     fetcher,
@@ -88,31 +72,37 @@ const VerticalBarChart = ({}: Props) => {
 
   return (
     <>
-      <ResponsiveContainer width={500} height={300} className={"border-2 p-5"}>
-        <BarChart
-          layout="vertical"
-          data={data?.chartData}
-          margin={{
-            top: 5,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
+        
+   
+        <ResponsiveContainer
+          width={500}
+          height={300}
+          className={"border-2 p-5"}
         >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis type="number" />
-          <YAxis type="category" dataKey={"name"} />
-          <Tooltip />
-          <Legend />
-          <Bar
-            dataKey="totalTime"
-            fill="#82ca9d"
-            onClick={(data) =>
-              addSearchParams({ selectedBar: data.payload.name })
-            }
-          />
-        </BarChart>
-      </ResponsiveContainer>
+          <BarChart
+            layout="vertical"
+            data={data?.chartData}
+            margin={{
+              top: 5,
+              right: 30,
+              left: 20,
+              bottom: 5,
+            }}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis type="number" />
+            <YAxis type="category" dataKey={"name"} />
+            <Tooltip />
+            <Legend />
+            <Bar
+              dataKey="totalTime"
+              fill="#82ca9d"
+              onClick={(data) =>
+                addSearchParams({ selectedBar: data.payload.name })
+              }
+            />
+          </BarChart>
+        </ResponsiveContainer>
     </>
   );
 };

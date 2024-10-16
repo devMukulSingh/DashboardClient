@@ -10,36 +10,37 @@ import {
 } from "recharts";
 import useSWR from "swr";
 import { useRouter, useSearchParams } from "next/navigation";
-import { base_url_server, useLocalStorage } from "@/lib/utils";
+import { base_url_server,  } from "@/lib/utils";
 import toast from "react-hot-toast";
 import { Iargs } from "./VerticalBarChart";
+import useLocalStorage from "@/lib/hooks/UseLocalStorage";
 
 const fetcher = async (args: { url: string; keys: Iargs }) =>
   await fetch(args.url, {
-    headers: {
-      Authorization: args.keys?.token || "",
-    },
+    credentials:"include",
+    
   }).then((res) => res.json());
 const HorizontalLineChart = () => {
-
   const searchParams = useSearchParams();
   const fromDate = searchParams.get("from");
   const toDate = searchParams.get("to");
   const age = searchParams.get("age");
   const gender = searchParams.get("gender");
-  const selectedBar = searchParams.get('selectedBar')
-  const  { getFromLocalStorage } = useLocalStorage();
-  const token = getFromLocalStorage('token');
+  const selectedBar = searchParams.get("selectedBar");
+  const { getFromLocalStorage } = useLocalStorage();
+  const user = getFromLocalStorage("user");
 
   const { data: apiData } = useSWR(
-    [
-      selectedBar && selectedBar !== ""
-        ? `${base_url_server}/chart/get-filtereddata?from=${fromDate}&to=${toDate}&age=${age}&gender=${gender}&selectedBar=${selectedBar}`
-        : null,
-      selectedBar,
-      token,
-    ],
-
+    {
+      url:
+        selectedBar && selectedBar !== ""
+          ? `${base_url_server}/chart/get-filtereddata?from=${fromDate}&to=${toDate}&age=${age}&gender=${gender}&selectedBar=${selectedBar}`
+          : null,
+      keys: {
+        selectedBar,
+        token: user.token,
+      },
+    },
     fetcher,
     {
       revalidateOnFocus: false,
@@ -49,11 +50,9 @@ const HorizontalLineChart = () => {
       },
     }
   );
-  console.log(apiData);
-  
 
   return (
-   <ResponsiveContainer width={500} height={300} className={"border-2 p-5"}>
+    <ResponsiveContainer width={500} height={300} className={"border-2 p-5"}>
       <LineChart
         width={730}
         height={250}

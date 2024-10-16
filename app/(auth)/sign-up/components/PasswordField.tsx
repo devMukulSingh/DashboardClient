@@ -9,9 +9,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-const PasswordField = ({ form }: Iform) => {
+const PasswordField = ({ form, isMutating }: Iform) => {
   return (
     <FormField
+      disabled={isMutating}
       name="password"
       control={form.control}
       render={({ field }) => (
@@ -20,7 +21,7 @@ const PasswordField = ({ form }: Iform) => {
           <FormControl>
             <Input {...field} type="password" />
           </FormControl>
-          <FormMessage/>
+          <FormMessage />
         </FormItem>
       )}
     />

@@ -10,6 +10,8 @@ import {
 } from "@/components/ui/popover";
 import { DateRange } from "react-day-picker";
 import { useRouter, useSearchParams } from "next/navigation";
+import Cookies from "js-cookie";
+import useAddParams from "@/lib/hooks/useAddParams";
 
 type Props = {
   date: DateRange | undefined;
@@ -17,24 +19,8 @@ type Props = {
 };
 
 const DatePicker = ({ date, setDate }: Props) => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const addSearchParams = (newParams: any) => {
-    // Get the current search params and turn them into a URLSearchParams object
-    const params = new URLSearchParams(searchParams);
+  const { addSearchParams } = useAddParams();
 
-    // Loop through the newParams object and append or update the query params
-    Object.keys(newParams).forEach((key) => {
-      if (newParams[key] === undefined) {
-        params.delete(key); // Optionally remove params if value is undefined
-      } else {
-        params.set(key, newParams[key]);
-      }
-    });
-
-    // Push the new URL with the updated search params
-    router.push(`?${params.toString()}`);
-  };
   const onDateSelect = (date: DateRange | undefined) => {
     setDate(date);
     if (date?.from && !date?.to)
@@ -42,18 +28,17 @@ const DatePicker = ({ date, setDate }: Props) => {
         from: format(date.from, "dd/MM/yyyy"),
         to: null,
       });
-      else if(date?.to && !date?.from){
-          addSearchParams({
-            from: null,
-            to: format(date.to, "dd/MM/yyyy"),
-          });
-      }
-      else if(date?.to && date?.from){
-          addSearchParams({
-            from: format(date.from, "dd/MM/yyyy"),
-            to: format(date.to, "dd/MM/yyyy"),
-          });
-      }
+    else if (date?.to && !date?.from) {
+      addSearchParams({
+        from: null,
+        to: format(date.to, "dd/MM/yyyy"),
+      });
+    } else if (date?.to && date?.from) {
+      addSearchParams({
+        from: format(date.from, "dd/MM/yyyy"),
+        to: format(date.to, "dd/MM/yyyy"),
+      });
+    }
   };
   return (
     <div className={cn("grid gap-2")}>

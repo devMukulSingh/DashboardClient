@@ -9,9 +9,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-const NameField = ({ form }: Iform) => {
+const NameField = ({ form,isMutating }: Iform) => {
   return (
     <FormField
+      disabled={isMutating}
       name="name"
       control={form.control}
       render={({ field }) => (
@@ -20,7 +21,7 @@ const NameField = ({ form }: Iform) => {
           <FormControl>
             <Input {...field} placeholder="Mukul singh bisht" />
           </FormControl>
-          <FormMessage/>
+          <FormMessage />
         </FormItem>
       )}
     />

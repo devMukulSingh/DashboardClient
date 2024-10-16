@@ -9,9 +9,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 
-const EmailField = ({ form }: Iform) => {
+const EmailField = ({ form,isMutating }: Iform) => {
   return (
     <FormField
+      disabled={isMutating}
       name="email"
       control={form.control}
       render={({ field }) => (
