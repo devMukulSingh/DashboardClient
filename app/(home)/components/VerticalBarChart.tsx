@@ -67,17 +67,10 @@ const VerticalBarChart = ({}: Props) => {
     <>
       <ResponsiveContainer
         width={500}
-        height={300}
+        height={340}
         className={"py-5 border-2 px-5  "}
       >
         <BarChart
-          className=""
-          margin={{
-            bottom: 0,
-            left: 0,
-            right: 0,
-            top: 0,
-          }}
           layout="vertical"
           data={data?.chartData}
         >
