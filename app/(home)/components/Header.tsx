@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Button } from "@/components/ui/button";
 import useLocalStorage from "@/lib/hooks/UseLocalStorage";
 import axios from "axios";
@@ -23,9 +23,7 @@ const Header = () => {
       <h1 className="text-lg sm:text-2xl">Welcome {user.name}</h1>
       <Button onClick={handleLogout}>
         <LogOut className="sm:mr-2" />
-        <h1 className="sm:block hidden">
-        Logout
-        </h1>
+        <h1 className="sm:block hidden">Logout</h1>
       </Button>
     </div>
   );

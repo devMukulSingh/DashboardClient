@@ -28,7 +28,7 @@ export default function Home() {
       from: from || new Date(2022, currMonth, 1),
       to: to || new Date(2022, currMonth, 30),
     }),
-    []
+    [],
   );
   const [date, setDate] = useState<DateRange | undefined>(initialDate);
 
@@ -48,7 +48,7 @@ export default function Home() {
           <DatePicker date={date} setDate={setDate} />
           <GenderFilter />
           <AgeFilter />
-          <Button className="w-fit" onClick={handleClearFilters}>
+          <Button className="w-fit mx-auto" onClick={handleClearFilters}>
             Clear filters
           </Button>
         </div>
