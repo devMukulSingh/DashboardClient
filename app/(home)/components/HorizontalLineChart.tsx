@@ -51,7 +51,11 @@ const HorizontalLineChart = () => {
   );
 
   return (
-    <ResponsiveContainer width={500} height={300} className={"border-2 py-2 "}>
+    <ResponsiveContainer
+      width={500}
+      height={300}
+      className={"border-2 py-5 px-5 "}
+    >
       <LineChart width={730} height={250} data={apiData?.chartData}>
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="Day" />

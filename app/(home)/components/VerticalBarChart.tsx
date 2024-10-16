@@ -68,7 +68,7 @@ const VerticalBarChart = ({}: Props) => {
       <ResponsiveContainer
         width={500}
         height={300}
-        className={"py-2 border-2  "}
+        className={"py-5 border-2 px-5  "}
       >
         <BarChart
           className=""
