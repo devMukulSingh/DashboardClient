@@ -5,7 +5,10 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const base_url_server = process.env.NODE_ENV === 'production' ? 'https://dashboardserver-z9yo.onrender.com' : `http://localhost:8000/api/v1`;
+export const base_url_server =
+  process.env.NODE_ENV === "production"
+    ? "https://dashboardserver-z9yo.onrender.com/api/v1"
+    : `http://localhost:8000/api/v1`;
 
 export const fetcher = async ([url, key, token]: [
   url: string,
