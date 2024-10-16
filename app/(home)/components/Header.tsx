@@ -3,8 +3,7 @@ import useLocalStorage from "@/lib/hooks/UseLocalStorage";
 import axios from "axios";
 import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
-import React from "react";
-
+import Cookies from "js-cookie";
 async function sendRequest(url: string) {
   return await axios.post(url);
 }
@@ -14,7 +13,7 @@ const Header = () => {
   const user = getFromLocalStorage("user");
   const router = useRouter();
   const handleLogout = () => {
-    document.cookie = "token=;";
+    Cookies.remove("token");
     router.push("/sign-in");
     removeFromLocalStorage("user");
   };
