@@ -18,6 +18,7 @@ import useLocalStorage from "@/lib/hooks/UseLocalStorage";
 const fetcher = async (args: { url: string; keys: Iargs }) =>
   await fetch(args.url, {
     credentials: "include",
+    
   }).then((res) => res.json());
 const HorizontalLineChart = () => {
   const searchParams = useSearchParams();
@@ -37,7 +38,6 @@ const HorizontalLineChart = () => {
           : null,
       keys: {
         selectedBar,
-        token: user.token,
       },
     },
     fetcher,
@@ -51,12 +51,16 @@ const HorizontalLineChart = () => {
   );
 
   return (
-    <ResponsiveContainer
-      width={500}
-      height={340}
-      className={"border-2 py-5 px-5 "}
-    >
-      <LineChart  data={apiData?.chartData}>
+    <ResponsiveContainer width={500} height={340} className={"border-2"}>
+      <LineChart
+        margin={{
+          bottom: 10,
+          left: 0,
+          right: 50,
+          top: 10,
+        }}
+        data={apiData?.chartData}
+      >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="Day" />
         <YAxis />

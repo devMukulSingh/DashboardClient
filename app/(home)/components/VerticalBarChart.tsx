@@ -20,7 +20,6 @@ import useLocalStorage from "@/lib/hooks/UseLocalStorage";
 export interface Iargs {
   toDate: string;
   fromDate: string;
-  token: string | undefined;
   gender: string;
 }
 
@@ -50,7 +49,6 @@ const VerticalBarChart = ({}: Props) => {
         fromDate,
         gender,
         age,
-        token: user.token,
       },
     },
     fetcher,
@@ -60,20 +58,18 @@ const VerticalBarChart = ({}: Props) => {
         toast.error(`Something went wrong, please try again later`);
         console.log(e);
       },
-    },
+    }
   );
 
   return (
     <>
-      <ResponsiveContainer
-        width={500}
-        height={340}
-        className={"py-5 border-2 px-5  "}
-      >
-        <BarChart
-          layout="vertical"
-          data={data?.chartData}
-        >
+      <ResponsiveContainer width={500} height={340} className={" border-2   "}>
+        <BarChart margin={{
+          bottom:10,
+          left:0,
+          right:30,
+          top:10
+        }} layout="vertical" data={data?.chartData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis type="number" />
           <YAxis type="category" dataKey={"name"} />
