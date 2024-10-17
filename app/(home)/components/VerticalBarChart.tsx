@@ -58,18 +58,22 @@ const VerticalBarChart = ({}: Props) => {
         toast.error(`Something went wrong, please try again later`);
         console.log(e);
       },
-    }
+    },
   );
 
   return (
     <>
       <ResponsiveContainer width={500} height={340} className={" border-2   "}>
-        <BarChart margin={{
-          bottom:10,
-          left:0,
-          right:30,
-          top:10
-        }} layout="vertical" data={data?.chartData}>
+        <BarChart
+          margin={{
+            bottom: 10,
+            left: 0,
+            right: 30,
+            top: 10,
+          }}
+          layout="vertical"
+          data={data?.chartData}
+        >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis type="number" />
           <YAxis type="category" dataKey={"name"} />

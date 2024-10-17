@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import DatePicker from "./components/DatePicker";
 import { DateRange } from "react-day-picker";
 import GenderFilter from "./components/GenderFilter";
@@ -28,7 +28,7 @@ export default function Home() {
       from: from || new Date(2022, currMonth, 1),
       to: to || new Date(2022, currMonth, 30),
     }),
-    [],
+    []
   );
   const [date, setDate] = useState<DateRange | undefined>(initialDate);
 
@@ -40,6 +40,11 @@ export default function Home() {
     setDate(initialDate);
     if (Cookies.get(user.id)) Cookies.remove(user.id);
   };
+  useEffect(() => {
+    const userPreferences = Cookies.get(user.id);
+    if (userPreferences) router.push(`/?${userPreferences}`);
+  }, []);
+
   return (
     <main className="flex flex-col gap-5 justify-center items-center min-h-[calc(100vh-5rem)]  ">
       <div className=" md:w-2/3 w-full gap-5 flex flex-col sm:items-center px-5 py-5 sm:p-10   ">

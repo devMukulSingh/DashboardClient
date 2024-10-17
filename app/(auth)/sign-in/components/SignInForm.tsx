@@ -22,7 +22,7 @@ type formValues = z.infer<typeof signInSchema>;
 
 async function sendRequest(
   url: string,
-  { arg }: { arg: formValues | { token: string } },
+  { arg }: { arg: formValues | { token: string } }
 ) {
   return await axios.post(url, arg, {
     withCredentials: true,
@@ -59,11 +59,10 @@ const SignUpForm = () => {
           secure: true,
           sameSite: "none",
         });
-        const userPreferences = Cookies.get(data.data.id);
-        if (userPreferences) router.push(`/?${userPreferences}`);
-        else router.push("/");
+        router.push('/')
+
       },
-    },
+    }
   );
   const isLoading = isMutating || form.formState.isSubmitting;
   const onSubmit = async (data: formValues) => {

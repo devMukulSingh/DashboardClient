@@ -18,7 +18,6 @@ import useLocalStorage from "@/lib/hooks/UseLocalStorage";
 const fetcher = async (args: { url: string; keys: Iargs }) =>
   await fetch(args.url, {
     credentials: "include",
-    
   }).then((res) => res.json());
 const HorizontalLineChart = () => {
   const searchParams = useSearchParams();
